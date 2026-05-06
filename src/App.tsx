@@ -16,6 +16,7 @@ interface Member {
   image: string;
   description: string;
   isActive: boolean;
+  instagramUrl?: string;
 }
 
 const members: Member[] = [
@@ -25,42 +26,48 @@ const members: Member[] = [
     symbol: <Droplets className="w-8 h-8" />, 
     image: 'https://cdn.phototourl.com/member/2026-05-05-0f0454c2-caee-4f28-8333-0109d6ce93c6.png',
     description: 'Leader of EXO. Guardian of Water.',
-    isActive: true
+    isActive: true,
+    instagramUrl: 'https://www.instagram.com/kimjuncotton/'
   },
   { 
     name: 'Baekhyun', unit: 'EXO-K', power: 'Light', 
     symbol: <Sun className="w-8 h-8" />, 
     image: 'https://cdn.phototourl.com/member/2026-05-05-74622eca-2b4a-46a9-9904-a8205b618fdf.png',
     description: 'Sovereign of Light.',
-    isActive: false
+    isActive: false,
+    instagramUrl: 'https://www.instagram.com/baekhyunee_exo/'
   },
   { 
     name: 'Chanyeol', unit: 'EXO-K', power: 'Fire', 
     symbol: <Flame className="w-8 h-8" />, 
     image: 'https://cdn.phototourl.com/member/2026-05-05-b360eea6-b834-422e-bc63-23a0ae07b942.png',
     description: 'Master of the Flame.',
-    isActive: true
+    isActive: true,
+    instagramUrl: 'https://www.instagram.com/real__pcy/'
   },
   { 
     name: 'D.O.', unit: 'EXO-K', power: 'Earth', 
     symbol: <Mountain className="w-8 h-8" />, 
     image: 'https://cdn.phototourl.com/member/2026-05-05-254d7764-f642-4567-a4f5-c66921f7605c.png',
     description: 'The Strength of Earth.',
-    isActive: true
+    isActive: true,
+    instagramUrl: 'https://www.instagram.com/d.o.hkyungsoo/'
   },
   { 
     name: 'Kai', unit: 'EXO-K', power: 'Teleportation', 
     symbol: <Zap className="w-8 h-8" />, 
     image: 'https://link.jiyiho.cn/orfile/view.php/471f237d3955f91b1cef0c0a5dfc60fa.png',
     description: 'The Walker of Dimensions.',
-    isActive: true
+    isActive: true,
+    instagramUrl: 'https://www.instagram.com/zkdlin/'
   },
   { 
     name: 'Sehun', unit: 'EXO-K', power: 'Wind', 
     symbol: <Wind className="w-8 h-8" />, 
     image: 'https://r2.image-upload.app/tyImg/ZixZ641a.png',
     description: 'Controller of the Zephyr.',
-    isActive: true
+    isActive: true,
+    instagramUrl: 'https://www.instagram.com/oohsehun/'
   },
   // EXO-M
   { 
@@ -68,14 +75,16 @@ const members: Member[] = [
     symbol: <Snowflake className="w-8 h-8" />, 
     image: 'https://r2.image-upload.app/tyImg/1enL9WHEd.png',
     description: 'The Icy Breath of Winter.',
-    isActive: false
+    isActive: false,
+    instagramUrl: 'https://www.instagram.com/e_xiu_o/'
   },
   { 
     name: 'Luhan', unit: 'EXO-M', power: 'Telekinesis', 
     symbol: <Star className="w-8 h-8" />, 
     image: 'https://link.jiyiho.cn/orfile/view.php/729f26e1b4bc1690cacc95525638c996.png',
     description: 'The Mind of the Stars.',
-    isActive: false
+    isActive: false,
+    instagramUrl: 'https://www.instagram.com/7_luhan_m/'
   },
   { 
     name: 'Kris', unit: 'EXO-M', power: 'Flight', 
@@ -89,7 +98,8 @@ const members: Member[] = [
     symbol: <Gem className="w-8 h-8" />, 
     image: 'https://r2.image-upload.app/tyImg/zrt9Qe4i.png',
     description: 'The Spirit of Life.',
-    isActive: true
+    isActive: true,
+    instagramUrl: 'https://www.instagram.com/layzhang/'
   },
   { 
     name: 'Chen', unit: 'EXO-M', power: 'Lightning', 
@@ -106,6 +116,122 @@ const members: Member[] = [
     isActive: false
   },
 ];
+
+const timelineData = [
+  {
+    year: "2012",
+    title: "Origin // 起源",
+    description: "The 12 guardians arrived from Exoplanet beyond our star system. Twelve elements, one universe. The 'MAMA' era established the mythos of the star-energy beings.",
+    image: "https://link.jiyiho.cn/orfile/view.php/f2580d09cacb4e565717629671fa3803.png"
+  },
+  {
+    year: "2013",
+    title: "XOXO // 巅峰",
+    description: "The first studio album. Breaking the 12-year drought in the industry with 1 million copies sold. 'Growl' became a cultural phenomenon, redefining visual and performance standards.",
+    image: "https://link.jiyiho.cn/orfile/view.php/43ac1e002fe981e4d1ae4b00c22ffef8.png"
+  },
+  {
+    year: "2015",
+    title: "EXODUS // 进化",
+    description: "A shift towards industrial and high-fashion visual narratives. The Pathcode series set a new benchmark for narrative-driven teasers and aesthetic depth.",
+    image: "https://link.jiyiho.cn/orfile/view.php/56ed415447e0669600c6abab0f9c7306.png"
+  },
+  {
+    year: "2021+",
+    title: "Expansion // 扩张",
+    description: "Into the digital realm and the Kwangya meta-narrative. The universe continues to expand through high-tech storytelling and conceptual innovation.",
+    image: "https://link.jiyiho.cn/orfile/view.php/e61f4d5e708c74a354fc0af720e7e5d2.png"
+  },
+];
+
+function EvolutionTimeline() {
+  return (
+    <div id="evolution" className="mb-40 relative max-w-5xl mx-auto px-6">
+      <div className="flex flex-col items-center mb-24">
+        <motion.span 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 0.3 }}
+          className="text-[10px] font-mono tracking-[0.5em] uppercase mb-4"
+        >
+          Chronological Records
+        </motion.span>
+        <h2 className="text-4xl md:text-7xl font-bold uppercase tracking-tighter metallic-text">Evolution</h2>
+      </div>
+
+      <div className="relative">
+        {/* Central Base Line */}
+        <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/10 -translate-x-1/2 z-0 hidden md:block" />
+
+        <div className="space-y-32 md:space-y-64 relative z-10">
+          {timelineData.map((item, idx) => (
+            <motion.div 
+              key={item.year}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className={`flex flex-col ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-12 md:gap-24`}
+            >
+              {/* Image/Visual Side */}
+              <div className="flex-1 w-full group">
+                <motion.div 
+                  whileHover={{ scale: 1.05 }}
+                  className="relative aspect-video rounded-sm overflow-hidden border border-white/5 bg-white/5"
+                >
+                  <img 
+                    src={item.image} 
+                    alt={item.title}
+                    className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-700 blur-[2px] group-hover:blur-0"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent opacity-60" />
+                </motion.div>
+              </div>
+
+              {/* Year Node - Desktop Only */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center justify-center">
+                <motion.div 
+                  className="w-4 h-4 rounded-full bg-white/40 border border-white/60 relative"
+                  whileHover={{ scale: 1.5 }}
+                >
+                  <motion.div 
+                    animate={{ scale: [1, 2, 1], opacity: [0.3, 0.6, 0.3] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                    className="absolute inset-0 rounded-full border border-white/40" 
+                  />
+                  {/* Ripple Effect on Hover/View */}
+                  <motion.div 
+                    whileInView={{ scale: [1, 4], opacity: [0.5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                    className="absolute inset-0 rounded-full bg-white/20"
+                  />
+                </motion.div>
+              </div>
+
+              {/* Content Side */}
+              <div className="flex-1 space-y-6 flex flex-col items-center md:items-start text-center md:text-left">
+                <div className="space-y-1">
+                  <motion.span 
+                    whileHover={{ scale: 1.1, x: 5 }}
+                    className="inline-block text-5xl md:text-7xl font-bold font-mono tracking-tighter text-white/10 group-hover:text-white/20 transition-colors"
+                  >
+                    {item.year}
+                  </motion.span>
+                  <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-widest text-white/90">
+                    {item.title}
+                  </h3>
+                </div>
+                <p className="text-sm md:text-base text-white/40 font-light leading-relaxed max-w-md">
+                  {item.description}
+                </p>
+                <div className="h-[1px] w-12 bg-white/20" />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const albums = [
   { 
@@ -649,7 +775,7 @@ export default function App() {
                 setSelectedId(null);
               }
             }}
-            className="relative h-[600px] w-full flex items-center justify-center overflow-visible select-none cursor-crosshair perspective-2000"
+            className="relative h-[600px] w-full flex items-center justify-center overflow-visible select-none cursor-crosshair perspective-2000 touch-pan-y"
           >
             <motion.div 
               style={{ x: xTranslate }}
@@ -718,7 +844,7 @@ export default function App() {
                       >
                         {/* Front Face (Layer A) */}
                         <div 
-                          className={`absolute inset-0 silver-border rounded-[20px] overflow-hidden bg-black flex flex-col transition-all duration-500 ${!member.isActive ? 'grayscale brightness-75' : 'opacity-100'}`}
+                          className={`absolute inset-0 silver-border rounded-[20px] overflow-hidden bg-black flex flex-col transition-all duration-500 group/card ${!member.isActive ? 'grayscale brightness-75' : 'opacity-100'}`}
                           style={{ 
                             backfaceVisibility: "hidden", 
                             WebkitBackfaceVisibility: "hidden",
@@ -729,10 +855,11 @@ export default function App() {
                         >
                           {/* Photocard Image Area */}
                           <div className="relative h-[75%] overflow-hidden">
-                            <img 
+                            <motion.img 
                               src={member.image} 
                               alt={member.name}
-                              className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
+                              whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
+                              className="w-full h-full object-cover transition-all duration-700"
                             />
                             
                             {!member.isActive && (
@@ -754,17 +881,19 @@ export default function App() {
                           <div className="h-[25%] p-5 bg-linear-to-b from-white/5 to-transparent backdrop-blur-xl flex flex-col justify-between border-t border-white/10">
                             <div>
                               <div className="flex justify-between items-center mb-1">
-                                <h3 className={`text-xl font-bold uppercase tracking-tighter ${member.isActive ? 'text-white' : 'text-zinc-500'}`}>
-                                  {member.name}
-                                </h3>
+                                <div className="flex items-center gap-2">
+                                  <h3 className={`text-xl font-bold uppercase tracking-tighter ${member.isActive ? 'text-white' : 'text-zinc-500'} group-hover/card:text-white transition-colors`}>
+                                    {member.name}
+                                  </h3>
+                                </div>
                                 <span className={`px-2 py-0.5 text-[8px] font-bold font-mono tracking-widest border rounded-full ${
                                    member.isActive ? 'text-white/80 border-white/20' : 'text-zinc-500 border-zinc-500/20'
                                 }`}>
                                   {member.unit}
                                 </span>
                               </div>
-                              <p className="text-[10px] text-white/30 font-mono uppercase tracking-[0.2em]">
-                                Power: <span className="text-white/60">{member.power}</span>
+                              <p className="text-[10px] text-white/30 font-mono uppercase tracking-[0.2em] group-hover/card:text-white/50 transition-colors">
+                                Power: <span className="text-white/60 group-hover/card:text-white group-hover/card:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all">{member.power}</span>
                               </p>
                             </div>
                           </div>
@@ -787,7 +916,20 @@ export default function App() {
                           <div className="relative z-10 flex flex-col h-full items-center text-center justify-between">
                             <div className="w-full border-b border-white/10 pb-4">
                               <p className="text-[10px] text-white/30 font-mono tracking-[0.4em] uppercase mb-1">Guardian Registry</p>
-                              <h4 className={`text-2xl font-bold uppercase tracking-widest ${member.isActive ? 'metallic-text' : 'text-zinc-400'}`}>{member.name}</h4>
+                              <div className="flex items-center justify-center gap-3">
+                                <h4 className={`text-2xl font-bold uppercase tracking-widest ${member.isActive ? 'metallic-text' : 'text-zinc-400'}`}>{member.name}</h4>
+                                {member.instagramUrl && (
+                                  <a 
+                                    href={member.instagramUrl} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-white/40 hover:text-white transition-colors"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <InstagramIcon className="w-4 h-4" />
+                                  </a>
+                                )}
+                              </div>
                             </div>
 
                             <div className="flex flex-col items-center gap-4">
@@ -810,14 +952,29 @@ export default function App() {
                                     </p>
                                   </div>
                                </div>
-                               <div className="flex justify-between items-end border-t border-white/10 pt-4">
-                                  <div className="text-left">
-                                    <p className="text-[8px] text-white/20 uppercase">Unit Partition</p>
-                                    <p className="text-sm font-bold text-white/60 font-mono">{member.unit}</p>
-                                  </div>
-                                  <div className="text-right">
-                                    <p className="text-[8px] text-white/20 uppercase">Status</p>
-                                    <p className={`text-sm font-bold font-mono ${member.isActive ? 'text-green-500/60' : 'text-zinc-500'}`}>{member.isActive ? 'ACTIVE' : 'FORMER'}</p>
+                               <div className="flex flex-col gap-4 border-t border-white/10 pt-4">
+                                  {member.instagramUrl && (
+                                    <motion.a
+                                      href={member.instagramUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      onClick={(e) => e.stopPropagation()}
+                                      whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.1)" }}
+                                      whileTap={{ scale: 0.98 }}
+                                      className="w-full py-2 border border-white/10 rounded-sm text-[10px] font-mono tracking-[0.2em] text-white/40 hover:text-white flex items-center justify-center gap-2 transition-all"
+                                    >
+                                      [ VIEW ON INSTAGRAM ]
+                                    </motion.a>
+                                  )}
+                                  <div className="flex justify-between items-end">
+                                     <div className="text-left">
+                                       <p className="text-[8px] text-white/20 uppercase">Unit Partition</p>
+                                       <p className="text-sm font-bold text-white/60 font-mono">{member.unit}</p>
+                                     </div>
+                                     <div className="text-right">
+                                       <p className="text-[8px] text-white/20 uppercase">Status</p>
+                                       <p className={`text-sm font-bold font-mono ${member.isActive ? 'text-green-500/60' : 'text-zinc-500'}`}>{member.isActive ? 'ACTIVE' : 'FORMER'}</p>
+                                     </div>
                                   </div>
                                </div>
                             </div>
@@ -979,7 +1136,7 @@ export default function App() {
                   </div>
 
                   {/* Tracklist Area */}
-                  <div className="h-40 overflow-y-auto scrollbar-hide border-t border-white/5 pt-6 w-full">
+                  <div className="h-40 overflow-y-auto scrollbar-hide border-t border-white/5 pt-6 w-full touch-pan-y">
                     <div className="grid grid-cols-2 gap-x-8 gap-y-1">
                       {albums[activeAlbumIdx].tracks.map((track, tIdx) => (
                         <motion.div 
@@ -1008,7 +1165,7 @@ export default function App() {
                   <Zap className="w-3 h-3 text-white/20 animate-pulse" />
                 </div>
 
-                <div className="grid grid-cols-2 gap-x-12 gap-y-20 h-auto px-6 pt-2 pb-10 scrollbar-hide items-start -translate-y-4">
+                <div className="grid grid-cols-2 gap-x-12 gap-y-20 h-auto px-6 pt-2 pb-10 scrollbar-hide items-start -translate-y-4 touch-pan-y">
                   {albums.map((album, idx) => (
                     <div key={album.title} className="flex flex-col items-center gap-8 group">
                       <motion.div
@@ -1083,6 +1240,8 @@ export default function App() {
            </div>
         </div>
       </main>
+
+            <EvolutionTimeline />
 
             {/* Return Button */}
             <motion.div
