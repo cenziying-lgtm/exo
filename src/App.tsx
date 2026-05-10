@@ -280,6 +280,39 @@ const albums = [
   },
 ];
 
+const mvs = [
+  {
+    title: "Growl",
+    year: "2013",
+    videoId: "BWfKkqo1Mk8"
+  },
+  {
+    title: "Call Me Baby",
+    year: "2015",
+    videoId: "I3dezFzsNss"
+  },
+  {
+    title: "Ko Ko Bop",
+    year: "2017",
+    videoId: "I3dezFzsNss"
+  },
+  {
+    title: "Obsession",
+    year: "2019",
+    videoId: "yWfsla_Uh80"
+  },
+  {
+    title: "Don't Mess Up My Tempo",
+    year: "2019",
+    videoId: "pSudEWBAYRE"
+  },
+  {
+    title: "Tempo",
+    year: "2020",
+    videoId: "RuqaVryDRd0"
+  },
+];
+
 export default function App() {
   const [activeAlbumIdx, setActiveAlbumIdx] = useState(0);
   const [isSwitching, setIsSwitching] = useState(false);
@@ -287,7 +320,7 @@ export default function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [modalMemberId, setModalMemberId] = useState<number | null>(null);
   const [decodingProgress, setDecodingProgress] = useState(0);
   const [trackProgress, setTrackProgress] = useState(0);
   const [showRipple, setShowRipple] = useState(false);
@@ -769,12 +802,6 @@ export default function App() {
             ref={carouselRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            onClick={(e) => {
-              if (e.target === e.currentTarget) {
-                if (selectedId !== null) playSound(putbackSoundRef);
-                setSelectedId(null);
-              }
-            }}
             className="relative h-[600px] w-full flex items-center justify-center overflow-visible select-none cursor-crosshair perspective-2000 touch-pan-y"
           >
             <motion.div 
@@ -782,8 +809,6 @@ export default function App() {
               className="flex items-center px-[30vw]"
             >
               {members.map((member, index) => {
-                const isSelected = selectedId === index;
-                
                 return (
                   <motion.div
                     key={member.name}
@@ -802,7 +827,7 @@ export default function App() {
                     className="relative w-[280px] md:w-[320px] aspect-[2/3] mx-[-30px] md:mx-[-50px] first:ml-0 last:mr-0"
                     style={{ 
                       perspective: "1200px",
-                      zIndex: isSelected ? 100 : 10 + index,
+                      zIndex: 10 + index,
                     }}
                   >
                     {/* Wrapper for Hover & State Locking */}
@@ -810,36 +835,31 @@ export default function App() {
                       className="w-full h-full preserve-3d cursor-pointer"
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (isSelected) {
-                          playSound(putbackSoundRef);
-                          setSelectedId(null);
-                        } else {
-                          playSound(flipSoundRef);
-                          setSelectedId(index);
-                        }
+                        playSound(flipSoundRef);
+                        setModalMemberId(index);
                       }}
                       onMouseEnter={() => {
-                        if (!isSelected) playSound(drawSoundRef);
+                        playSound(drawSoundRef);
                       }}
                       animate={{
-                        y: isSelected ? -50 : 0,
-                        rotateX: isSelected ? 12 : 0,
-                        rotateZ: isSelected ? (index % 2 === 0 ? 2 : -2) : 0,
+                        y: 0,
+                        rotateX: 0,
+                        rotateZ: 0,
                         transition: { type: "spring", stiffness: 200, damping: 25 }
                       }}
-                      whileHover={!isSelected ? { 
+                      whileHover={{ 
                         y: -40,
                         rotateX: 8,
                         rotateZ: (index % 2 === 0 ? 1 : -1),
                         transition: { type: "spring", stiffness: 200, damping: 25 }
-                      } : {}}
+                      }}
                     >
                       {/* Inner Container: The physical flipper */}
                       <motion.div
                         className="relative w-full h-full"
                         style={{ transformStyle: "preserve-3d" }}
                         initial={false}
-                        animate={{ rotateY: isSelected ? 180 : 0 }}
+                        animate={{ rotateY: 0 }}
                         transition={{ type: "spring", stiffness: 200, damping: 25 }}
                       >
                         {/* Front Face (Layer A) */}
@@ -848,9 +868,7 @@ export default function App() {
                           style={{ 
                             backfaceVisibility: "hidden", 
                             WebkitBackfaceVisibility: "hidden",
-                            boxShadow: isSelected 
-                              ? "0 50px 100px -20px rgba(0,0,0,0.8), 0 30px 60px -30px rgba(255,255,255,0.1)" 
-                              : "0 10px 30px rgba(0,0,0,0.8)"
+                            boxShadow: "0 10px 30px rgba(0,0,0,0.8)"
                           }}
                         >
                           {/* Photocard Image Area */}
@@ -895,88 +913,6 @@ export default function App() {
                               <p className="text-[10px] text-white/30 font-mono uppercase tracking-[0.2em] group-hover/card:text-white/50 transition-colors">
                                 Power: <span className="text-white/60 group-hover/card:text-white group-hover/card:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all">{member.power}</span>
                               </p>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Back Face (Layer B) - Fixed Structure */}
-                        <div 
-                          className={`absolute inset-0 silver-border rounded-[20px] bg-zinc-900/95 backdrop-blur-xl flex flex-col p-8 overflow-hidden ${!member.isActive ? 'grayscale opacity-90' : ''}`}
-                          style={{ 
-                            backfaceVisibility: "hidden", 
-                            WebkitBackfaceVisibility: "hidden",
-                            transform: "rotateY(180deg)" 
-                          }}
-                        >
-                          {/* Artistic Background Logo */}
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 scale-[4] text-white pointer-events-none">
-                            {member.symbol}
-                          </div>
-
-                          <div className="relative z-10 flex flex-col h-full items-center text-center justify-between">
-                            <div className="w-full border-b border-white/10 pb-4">
-                              <p className="text-[10px] text-white/30 font-mono tracking-[0.4em] uppercase mb-1">Guardian Registry</p>
-                              <div className="flex items-center justify-center gap-3">
-                                <h4 className={`text-2xl font-bold uppercase tracking-widest ${member.isActive ? 'metallic-text' : 'text-zinc-400'}`}>{member.name}</h4>
-                                {member.instagramUrl && (
-                                  <a 
-                                    href={member.instagramUrl} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="text-white/40 hover:text-white transition-colors"
-                                    onClick={(e) => e.stopPropagation()}
-                                  >
-                                    <InstagramIcon className="w-4 h-4" />
-                                  </a>
-                                )}
-                              </div>
-                            </div>
-
-                            <div className="flex flex-col items-center gap-4">
-                              <div className={`p-4 rounded-full border border-white/10 bg-white/5 transition-colors ${member.isActive ? 'text-white/80' : 'text-zinc-600'}`}>
-                                {member.symbol}
-                              </div>
-                            </div>
-
-                            <div className="w-full space-y-6">
-                               <div className="text-left space-y-3">
-                                  <p className="text-[9px] text-white/30 uppercase tracking-[0.3em]">Guardian's Message</p>
-                                  <div className="relative">
-                                    <p className={`text-sm leading-relaxed font-serif italic tracking-tight opacity-90 select-none ${!member.isActive ? 'text-zinc-400' : 'text-white/80'}`}>
-                                      "Across dimensions, our light remains connected. To the stars who watch us, thank you for being our universe."
-                                    </p>
-                                    <div className={`h-[1px] w-full mt-4 bg-linear-to-r from-transparent ${member.isActive ? 'via-white/20' : 'via-zinc-600/20'} to-transparent`} />
-                                    
-                                    <p className={`mt-4 text-3xl font-serif italic tracking-tighter opacity-70 select-none ${!member.isActive ? 'text-zinc-500 drop-shadow-[0_0_5px_rgba(255,255,255,0.2)]' : 'text-white/90'}`}>
-                                      {member.name}
-                                    </p>
-                                  </div>
-                               </div>
-                               <div className="flex flex-col gap-4 border-t border-white/10 pt-4">
-                                  {member.instagramUrl && (
-                                    <motion.a
-                                      href={member.instagramUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      onClick={(e) => e.stopPropagation()}
-                                      whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.1)" }}
-                                      whileTap={{ scale: 0.98 }}
-                                      className="w-full py-2 border border-white/10 rounded-sm text-[10px] font-mono tracking-[0.2em] text-white/40 hover:text-white flex items-center justify-center gap-2 transition-all"
-                                    >
-                                      [ VIEW ON INSTAGRAM ]
-                                    </motion.a>
-                                  )}
-                                  <div className="flex justify-between items-end">
-                                     <div className="text-left">
-                                       <p className="text-[8px] text-white/20 uppercase">Unit Partition</p>
-                                       <p className="text-sm font-bold text-white/60 font-mono">{member.unit}</p>
-                                     </div>
-                                     <div className="text-right">
-                                       <p className="text-[8px] text-white/20 uppercase">Status</p>
-                                       <p className={`text-sm font-bold font-mono ${member.isActive ? 'text-green-500/60' : 'text-zinc-500'}`}>{member.isActive ? 'ACTIVE' : 'FORMER'}</p>
-                                     </div>
-                                  </div>
-                               </div>
                             </div>
                           </div>
                         </div>
@@ -1243,6 +1179,75 @@ export default function App() {
 
             <EvolutionTimeline />
 
+            {/* Music Videos Section */}
+            <div id="mvs" className="mb-40 relative max-w-5xl mx-auto px-6">
+              <div className="flex flex-col items-center mb-24">
+                <motion.span 
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 0.3 }}
+                  className="text-[10px] font-mono tracking-[0.5em] uppercase mb-4"
+                >
+                  Visual Records
+                </motion.span>
+                <h2 className="text-4xl md:text-7xl font-bold uppercase tracking-tighter metallic-text">Music Videos</h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6">
+                {mvs.map((mv, idx) => {
+                  const embedUrl = `https://www.youtube.com/embed/${mv.videoId}?si=exo2024`;
+                  
+                  return (
+                  <motion.div
+                    key={mv.title}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, delay: idx * 0.1 }}
+                    className="group relative overflow-hidden rounded-lg bg-black border border-white/10 hover:border-white/30 transition-all duration-300"
+                  >
+                    {/* Video Title */}
+                    <div className="absolute top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-black via-black/50 to-transparent">
+                      <div className="space-y-1">
+                        <p className="text-xs font-mono text-white/60 tracking-[0.2em] uppercase">
+                          {mv.year}
+                        </p>
+                        <h3 className="text-lg font-bold uppercase tracking-wide text-white leading-tight">
+                          {mv.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    {/* YouTube Embed */}
+                    <div className="w-full aspect-video bg-black overflow-hidden">
+                      <iframe
+                        className="w-full h-full"
+                        src={embedUrl}
+                        title={`${mv.title} - EXO`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      />
+                    </div>
+
+                    {/* Bottom Info */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                      <motion.div 
+                        className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-white/40 group-hover:text-white/80 transition-colors"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: idx * 0.1 + 0.2 }}
+                      >
+                        <YoutubeIcon className="w-3 h-3" />
+                        <span>EMBEDDED VIDEO</span>
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Return Button */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -1288,6 +1293,139 @@ export default function App() {
           &copy; 2012-2024 SM Entertainment | SM TOWN | Produced by AI Studio
         </p>
       </footer>
+      
+      {/* Member Modal - Full Screen Modal for Selected Member */}
+      <AnimatePresence>
+        {modalMemberId !== null && (
+          <motion.div
+            key="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setModalMemberId(null)}
+            className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9998] flex items-center justify-center p-4"
+          >
+            {/* Close Button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              onClick={() => setModalMemberId(null)}
+              className="absolute top-6 right-6 z-[10000] p-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-all group"
+            >
+              <X className="w-6 h-6 text-white" />
+            </motion.button>
+
+            {/* Modal Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 50 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 50 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-md w-full z-[9999]"
+            >
+              {members[modalMemberId] && (
+                <div className="bg-gradient-to-br from-zinc-900/95 to-black border border-white/20 rounded-3xl overflow-hidden shadow-2xl">
+                  {/* Member Image Section */}
+                  <div className="relative h-72 overflow-hidden bg-black">
+                    <img
+                      src={members[modalMemberId].image}
+                      alt={members[modalMemberId].name}
+                      className="w-full h-full object-cover object-center"
+                      style={{ objectPosition: 'center 20%' }}
+                    />
+                    {!members[modalMemberId].isActive && (
+                      <div className="absolute top-4 left-4">
+                        <span className="px-3 py-1 text-[10px] font-bold font-mono tracking-widest text-white/80 border border-white/30 backdrop-blur-md bg-black/60 rounded-full">
+                          FORMER
+                        </span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+                  </div>
+
+                  {/* Member Info Section */}
+                  <div className="p-6 space-y-4">
+                    {/* Header with Name and Icon */}
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="space-y-2 flex-1">
+                        <div className="flex items-center gap-2">
+                          <h2 className="text-2xl font-bold uppercase tracking-tighter text-white">
+                            {members[modalMemberId].name}
+                          </h2>
+                          <span className="px-2 py-0.5 text-[10px] font-bold font-mono tracking-widest border rounded-full bg-white/5 border-white/20 text-white/80 whitespace-nowrap">
+                            {members[modalMemberId].unit}
+                          </span>
+                        </div>
+                        <div className="h-0.5 w-16 bg-gradient-to-r from-white/40 to-transparent" />
+                      </div>
+                      <div className="p-3 rounded-full border border-white/20 bg-white/5 text-white/80 flex-shrink-0">
+                        {members[modalMemberId].symbol}
+                      </div>
+                    </div>
+
+                    {/* Power Information */}
+                    <div className="space-y-1 p-3 bg-white/5 border border-white/10 rounded-lg">
+                      <p className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Guardian Power</p>
+                      <p className="text-lg font-bold text-white tracking-wide">
+                        {members[modalMemberId].power}
+                      </p>
+                    </div>
+
+                    {/* Description */}
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Profile</p>
+                      <p className="text-sm leading-relaxed text-white/80 font-light">
+                        {members[modalMemberId].description}
+                      </p>
+                    </div>
+
+                    {/* Guardian Message */}
+                    <div className="space-y-2 p-3 bg-white/5 border border-white/10 rounded-lg">
+                      <p className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Message</p>
+                      <p className="text-xs leading-relaxed italic text-white/70 font-serif">
+                        "Across dimensions, our light remains connected. To the stars who watch us, thank you for being our universe."
+                      </p>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-3 pt-3">
+                      {members[modalMemberId].instagramUrl && (
+                        <motion.a
+                          href={members[modalMemberId].instagramUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="flex-1 py-2 border border-white/20 rounded-lg bg-white/5 hover:bg-white/10 text-center font-mono text-xs uppercase tracking-wider text-white/60 hover:text-white transition-all"
+                        >
+                          Instagram
+                        </motion.a>
+                      )}
+                      <motion.button
+                        onClick={() => setModalMemberId(null)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex-1 py-2 border border-white/30 rounded-lg bg-white/10 text-center font-mono text-xs uppercase tracking-wider text-white hover:bg-white/20 transition-all"
+                      >
+                        Close
+                      </motion.button>
+                    </div>
+
+                    {/* Status Indicator */}
+                    <div className="flex justify-between text-[10px] font-mono text-white/30 pt-3 border-t border-white/10">
+                      <span>Unit: {members[modalMemberId].unit}</span>
+                      <span>{members[modalMemberId].isActive ? "🟢 ACTIVE" : "⚪ FORMER"}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       
       {/* Floating Return Button */}
       <AnimatePresence>
