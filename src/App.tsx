@@ -1243,6 +1243,8 @@ export default function App() {
 
             <EvolutionTimeline />
 
+            <MediaArchive />
+
             {/* Return Button */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -1321,6 +1323,160 @@ export default function App() {
         </defs>
       </svg>
     </div>
+  );
+}
+
+const videoArchiveData = [
+  { 
+    id: 'LIVE_SPECTRUM', 
+    title: "EXO PLANET #3 - The EXO'rDIUM in Japan FULL", 
+    url: 'https://www.youtube.com/embed/gneX7Gm15Ck',
+    cover: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=800&h=450',
+    frequency: '728.15 MHz',
+    location: 'TOKYO DOME STATION'
+  },
+  { 
+    id: 'SIGNAL_ARCHIVE', 
+    title: 'EXO - "El Dorado" Live Performance', 
+    url: 'https://www.youtube.com/embed/QEo5hAQKCnw',
+    cover: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=800&h=450',
+    frequency: '912.04 MHz',
+    location: 'BEIJING CENTRAL AXIS'
+  },
+  { 
+    id: 'TIME_RESONANCE', 
+    title: "EXO CONCERT 'MAMA + Monster' 4K Fancam (EXhOrizon 2026)", 
+    url: 'https://www.youtube.com/embed/zIwtqMo7iHk',
+    cover: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800&h=450',
+    frequency: '104.50 MHz',
+    location: 'SEOUL STADIUM OMEGA'
+  },
+  { 
+    id: 'AXIS_OBSERVATION', 
+    title: 'The Elyxion in Japan Full Concert', 
+    url: 'https://www.youtube.com/embed/imbfzowPSJQ',
+    cover: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=800&h=450',
+    frequency: '443.20 MHz',
+    location: 'OSAKA DOME COMPLEX'
+  },
+];
+
+function MediaArchive() {
+  const [selectedVideo, setSelectedVideo] = useState<typeof videoArchiveData[0] | null>(null);
+
+  return (
+    <section id="media-archive" className="py-32 px-6 max-w-7xl mx-auto bg-black relative border-t border-white/5">
+      <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+      
+      <div className="mb-20 text-center relative z-10">
+        <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight metallic-text">Media Archive</h2>
+        <p className="text-white/30 text-[10px] font-mono tracking-[0.4em] uppercase mt-2">Visual Signal Records // 影像档案馆</p>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+        {videoArchiveData.map((video) => (
+          <motion.div
+            key={video.id}
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            className="relative aspect-video rounded-xs overflow-hidden border border-white/10 cursor-pointer group bg-zinc-950"
+            onClick={() => setSelectedVideo(video)}
+          >
+            {/* Cover Image with Grayscale Filter transition */}
+            <img 
+              src={video.cover} 
+              alt={video.title}
+              className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-75"
+            />
+
+            {/* Retro Blue-Gray Tint Screen Mask Overlay */}
+            <div className="absolute inset-0 bg-[#16222f]/65 mix-blend-color-dodge z-10 pointer-events-none transition-opacity duration-500 group-hover:opacity-10" />
+
+            {/* Scanning Line Horizontal lines */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(18,24,38,0)_50%,rgba(0,0,0,0.3)_50%)] bg-[size:100%_4px] opacity-40 z-10 pointer-events-none transition-opacity duration-500 group-hover:opacity-25" />
+
+            {/* Real-time Dynamic Laser Scanning Line */}
+            <motion.div 
+              animate={{ y: ["-100%", "100%"] }} 
+              transition={{ duration: 5, repeat: Infinity, ease: "linear" }} 
+              className="absolute left-0 right-0 h-[2px] bg-cyan-400/30 blur-[1px] z-10 pointer-events-none" 
+            />
+
+            {/* Retro Display Glitch / Noise Frame Border corner lines */}
+            <div className="absolute top-4 left-4 w-2 h-2 border-t border-l border-white/30 pointer-events-none group-hover:border-white/60 transition-colors" />
+            <div className="absolute top-4 right-4 w-2 h-2 border-t border-r border-white/30 pointer-events-none group-hover:border-white/60 transition-colors" />
+            <div className="absolute bottom-4 left-4 w-2 h-2 border-b border-l border-white/30 pointer-events-none group-hover:border-white/60 transition-colors" />
+            <div className="absolute bottom-4 right-4 w-2 h-2 border-b border-r border-white/30 pointer-events-none group-hover:border-white/60 transition-colors" />
+
+            {/* Corner Info Data Overlay */}
+            <div className="absolute top-4 left-8 text-[8px] font-mono tracking-widest text-white/30 group-hover:text-white/60 transition-colors">
+              [ {video.id} ]
+            </div>
+            <div className="absolute top-4 right-8 text-[8px] font-mono tracking-widest text-white/30 text-right group-hover:text-emerald-400 transition-colors">
+              FREQ: {video.frequency} // LOCK
+            </div>
+
+            {/* Dark Gradient Overlay for legible text */}
+            <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent z-10" />
+            
+            {/* Footer Text Area */}
+            <div className="absolute inset-x-0 bottom-0 p-6 z-20 flex flex-col gap-1.5">
+              <span className="text-cyan-400/40 text-[8px] font-mono tracking-[0.3em] uppercase group-hover:text-cyan-400/80 transition-colors">
+                LOC: {video.location}
+              </span>
+              <h3 className="text-white/70 font-mono text-xs md:text-sm tracking-wide font-bold uppercase truncate group-hover:text-white transition-colors">
+                {video.title}
+              </h3>
+            </div>
+
+            {/* Linear white Play button on Hover */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
+              <motion.div 
+                whileHover={{ scale: 1.1 }}
+                className="p-5 border border-white rounded-full bg-black/40 backdrop-blur-sm shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+              >
+                <Play className="w-8 h-8 text-white fill-none stroke-[1.2]" />
+              </motion.div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <AnimatePresence>
+        {selectedVideo && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-6 md:p-12"
+          >
+            {/* [ CLOSE_SIGNAL ] Button */}
+            <button 
+              onClick={() => setSelectedVideo(null)}
+              className="absolute top-8 right-8 border border-white/20 px-5 py-2.5 text-white/60 font-mono tracking-[0.2em] text-xs hover:text-white hover:border-white hover:bg-white/5 transition-all rounded-xs"
+            >
+              [ CLOSE_SIGNAL ]
+            </button>
+            
+            <div className="w-full max-w-5xl aspect-video bg-black shadow-[0_0_80px_rgba(255,255,255,0.15)] border border-white/10 rounded-sm overflow-hidden relative">
+              <iframe 
+                src={`${selectedVideo.url}?autoplay=1`} 
+                className="w-full h-full"
+                allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            
+            <div className="mt-8 text-center flex flex-col items-center gap-2 max-w-2xl">
+              <span className="text-cyan-400/60 font-mono text-[9px] tracking-[0.4em] uppercase">
+                NOW STREAMING // SIGNAL STYLUS: {selectedVideo.id}
+              </span>
+              <p className="text-white/80 font-mono text-sm tracking-wide uppercase">{selectedVideo.title}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
   );
 }
 
