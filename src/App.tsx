@@ -64,7 +64,7 @@ const members: Member[] = [
   { 
     name: 'Sehun', unit: 'EXO-K', power: 'Wind', 
     symbol: <Wind className="w-8 h-8" />, 
-    image: 'https://r2.image-upload.app/tyImg/ZixZ641a.png',
+    image: 'https://r2.image-upload.app/tyImg/bjbE9cql.png',
     description: 'Controller of the Zephyr.',
     isActive: true,
     instagramUrl: 'https://www.instagram.com/oohsehun/'
@@ -73,7 +73,7 @@ const members: Member[] = [
   { 
     name: 'Xiumin', unit: 'EXO-M', power: 'Frost', 
     symbol: <Snowflake className="w-8 h-8" />, 
-    image: 'https://r2.image-upload.app/tyImg/1enL9WHEd.png',
+    image: 'https://r2.image-upload.app/tyImg/vSu2dYMo.png',
     description: 'The Icy Breath of Winter.',
     isActive: false,
     instagramUrl: 'https://www.instagram.com/e_xiu_o/'
@@ -96,7 +96,7 @@ const members: Member[] = [
   { 
     name: 'Lay', unit: 'EXO-M', power: 'Healing', 
     symbol: <Gem className="w-8 h-8" />, 
-    image: 'https://r2.image-upload.app/tyImg/zrt9Qe4i.png',
+    image: 'https://r2.image-upload.app/tyImg/VUzYM0LK.png',
     description: 'The Spirit of Life.',
     isActive: true,
     instagramUrl: 'https://www.instagram.com/layzhang/'
@@ -111,7 +111,7 @@ const members: Member[] = [
   { 
     name: 'Tao', unit: 'EXO-M', power: 'Time Control', 
     symbol: <Thermometer className="w-8 h-8" />, 
-    image: 'https://r2.image-upload.app/tyImg/Wq2RKUOb.png',
+    image: 'https://r2.image-upload.app/tyImg/1hhKn1aLu.png',
     description: 'The Keeper of Time.',
     isActive: false
   },
